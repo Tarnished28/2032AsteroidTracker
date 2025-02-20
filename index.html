@@ -138,6 +138,7 @@
         }
         function updateCountdown() {
             let nextUpdate = parseInt(localStorage.getItem("nextUpdate")) || Date.now() + 21600000;
+            localStorage.setItem("nextUpdate", nextUpdate);
             function tick() {
                 let timeDiff = nextUpdate - Date.now();
                 if (timeDiff <= 0) {
@@ -154,7 +155,6 @@
             tick();
             let storedData = JSON.parse(localStorage.getItem("asteroidData"));
             if (storedData) displayAsteroidData(storedData);
-            else generateAsteroidData();
         }
         updateCountdown();
     </script>
