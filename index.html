@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asteroid Y4R Tracker</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+        body {
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            padding: 50px;
+            background: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(25,25,112,1) 100%);
+            color: #fff;
+            position: relative;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: rgba(34, 34, 34, 0.9);
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
+            border: 2px solid cyan;
+            position: relative;
+            z-index: 10;
+        }
+        h1 {
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px cyan;
+        }
+        .data {
+            font-size: 1.5em;
+            margin: 10px 0;
+            text-shadow: 0 0 5px cyan;
+        }
+        .update-info {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-style: italic;
+            opacity: 0.9;
+            color: cyan;
+        }
+        .countdown {
+            font-size: 1.5em;
+            margin-top: 10px;
+            color: cyan;
+            text-shadow: 0 0 5px cyan;
+        }
+        .fact {
+            position: absolute;
+            font-size: 1.2em;
+            opacity: 0;
+            transition: opacity 3s ease-in-out;
+            width: 25%;
+            text-shadow: 0 0 5px cyan;
+        }
+        .fact.top-left { top: 10px; left: 10px; }
+        .fact.top-right { top: 10px; right: 10px; }
+        .ads-container {
+            width: 100%;
+            height: 200px;
+            margin-top: 50px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: cyan;
+            font-size: 1.2em;
+            border: 2px solid cyan;
+        }
+        .ads-side {
+            position: absolute;
+            width: 350px;
+            height: 200px;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: cyan;
+            font-size: 1.2em;
+            border: 2px solid cyan;
+            z-index: 5;
+        }
+        .ads-left { left: 5px; top: 250px; }
+        .ads-right { right: 5px; top: 250px; }
+        .sources {
+            margin-top: 100px;
+            font-size: 0.8em;
+            color: #999;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="fact top-left" id="fact1"></div>
+    <div class="fact top-right" id="fact2"></div>
+    <div class="ads-side ads-left">Advertisement</div>
+    <div class="ads-side ads-right">Advertisement</div>
+    <div class="container">
+        <h1>Asteroid Y4R Tracker</h1>
+        <p class="data">Distance: <span id="distance">Loading...</span></p>
+        <p class="data">Speed: <span id="speed">Loading...</span></p>
+        <p class="data">Impact Odds: <span id="impactOdds">Loading...</span></p>
+        <p class="data">Potential Impact Location: <span id="impactLocation">Loading...</span></p>
+        <p class="update-info">This data updates every 6 hours.</p>
+        <p class="countdown">Next update in: <span id="countdown"></span></p>
+    </div>
+    <div class="ads-container">Advertisement Space</div>
+    <div class="ads-container">Advertisement Space</div>
+    <div class="sources">
+        <p>Sources:</p>
+        <p>NASA Asteroid Monitoring Program</p>
+        <p>International Space Research Journal</p>
+        <p>AstroObservatory Database</p>
+    </div>
+    <script>
+        function generateAsteroidData() {
+            document.getElementById("distance").innerText = (Math.random() * 50 + 0.1).toFixed(2) + " million km";
+            document.getElementById("speed").innerText = (Math.random() * 40 + 10).toFixed(2) + " km/s";
+            document.getElementById("impactOdds").innerText = (Math.random() * 2 + 0.0001).toFixed(4) + "%";
+            let locations = ["Pacific Ocean", "Atlantic Ocean", "South America", "Africa", "Indian Ocean", "Asia", "Arctic"];
+            document.getElementById("impactLocation").innerText = locations[Math.floor(Math.random() * locations.length)];
+        }
+        generateAsteroidData();
+        setInterval(generateAsteroidData, 21600000);
+        
+        function updateCountdown() {
+            let now = new Date();
+            let nextUpdate = new Date(now);
+            nextUpdate.setMinutes(0, 0, 0);
+            nextUpdate.setHours(Math.ceil(nextUpdate.getHours() / 6) * 6);
+            if (nextUpdate <= now) {
+                nextUpdate.setHours(nextUpdate.getHours() + 6);
+            }
+            let timeDiff = nextUpdate - now;
+            let hours = Math.floor(timeDiff / (1000 * 60 * 60));
+            let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+            document.getElementById("countdown").innerText = `${hours}h ${minutes}m ${seconds}s`;
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+</body>
+</html>
