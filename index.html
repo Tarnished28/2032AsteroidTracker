@@ -92,6 +92,9 @@
             color: #999;
             text-align: center;
         }
+        @media (max-width: 768px) {
+            .ads-container { display: none; }
+        }
     </style>
 </head>
 <body>
@@ -126,23 +129,6 @@
         }
         generateAsteroidData();
         setInterval(generateAsteroidData, 21600000);
-        
-        function updateCountdown() {
-            let now = new Date();
-            let nextUpdate = new Date(now);
-            nextUpdate.setMinutes(0, 0, 0);
-            nextUpdate.setHours(Math.ceil(nextUpdate.getHours() / 6) * 6);
-            if (nextUpdate <= now) {
-                nextUpdate.setHours(nextUpdate.getHours() + 6);
-            }
-            let timeDiff = nextUpdate - now;
-            let hours = Math.floor(timeDiff / (1000 * 60 * 60));
-            let minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-            let seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-            document.getElementById("countdown").innerText = `${hours}h ${minutes}m ${seconds}s`;
-        }
-        updateCountdown();
-        setInterval(updateCountdown, 1000);
     </script>
 </body>
 </html>
