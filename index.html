@@ -3,161 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Asteroid Y4R Tracker</title>
+    <title>Days Until Possible Impact of 2024 Y4R Asteroid</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
         body {
+            margin: 0;
+            padding: 0;
             font-family: 'Orbitron', sans-serif;
+            color: #00ffcc;
             text-align: center;
-            padding: 50px;
-            background: radial-gradient(circle, rgba(0,0,0,1) 30%, rgba(25,25,112,1) 100%);
-            color: #fff;
-            position: relative;
+            background: black;
+            overflow: hidden;
         }
+
         .container {
-            max-width: 600px;
-            margin: auto;
+            position: relative;
+            background: rgba(0, 0, 0, 0.7);
             padding: 20px;
             border-radius: 10px;
-            background-color: rgba(34, 34, 34, 0.9);
-            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.5);
-            border: 2px solid cyan;
-            position: relative;
+            box-shadow: 0 0 15px #00ffcc;
             z-index: 10;
+            margin-top: 10vh;
         }
+
         h1 {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 2.5em;
+            text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 0 0 10px cyan;
         }
-        .data {
-            font-size: 1.5em;
-            margin: 10px 0;
-            text-shadow: 0 0 5px cyan;
-            word-wrap: break-word;
+
+        #countdown {
+            font-size: 1.8em;
+            text-shadow: 0 0 5px #00ffcc, 0 0 10px #00ffcc;
         }
-        .update-info {
-            margin-top: 20px;
-            font-size: 1.2em;
-            font-style: italic;
-            opacity: 0.9;
-            color: cyan;
+
+        #countdown span {
+            font-weight: bold;
+            font-size: 2em;
+            animation: glow 1.5s infinite alternate;
         }
-        .countdown {
-            font-size: 1.5em;
-            margin-top: 10px;
-            color: cyan;
-            text-shadow: 0 0 5px cyan;
-        }
-        .fact {
-            position: absolute;
-            font-size: 1.2em;
-            opacity: 0;
-            transition: opacity 3s ease-in-out;
-            width: 25%;
-            text-shadow: 0 0 5px cyan;
-        }
-        .fact.top-left { top: 10px; left: 10px; }
-        .fact.top-right { top: 10px; right: 10px; }
-        .ads-container {
-            width: 100%;
-            height: 200px;
-            margin-top: 50px;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: cyan;
-            font-size: 1.2em;
-            border: 2px solid cyan;
-        }
-        .ads-side {
-            position: absolute;
-            width: 350px;
-            height: 200px;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: cyan;
-            font-size: 1.2em;
-            border: 2px solid cyan;
-            z-index: 5;
-        }
-        .ads-left { left: 5px; top: 250px; }
-        .ads-right { right: 5px; top: 250px; }
-        .sources {
-            margin-top: 100px;
-            font-size: 0.8em;
-            color: #999;
-            text-align: center;
-        }
-        @media (max-width: 768px) {
-            .ads-side { display: none; }
-            .data span { display: block; word-break: break-word; }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc; }
+            to { text-shadow: 0 0 20px #00ffcc, 0 0 30px #00ffcc; }
         }
     </style>
 </head>
 <body>
-    <div class="fact top-left" id="fact1"></div>
-    <div class="fact top-right" id="fact2"></div>
-    <div class="ads-side ads-left">Advertisement</div>
-    <div class="ads-side ads-right">Advertisement</div>
     <div class="container">
-        <h1>Asteroid Y4R Tracker</h1>
-        <p class="data">Distance: <span id="distance"></span></p>
-        <p class="data">Speed: <span id="speed"></span></p>
-        <p class="data">Impact Odds: <span id="impactOdds"></span></p>
-        <p class="data">Potential Impact Location: <span id="impactLocation"></span></p>
-        <p class="update-info">This data updates every 6 hours.</p>
-        <p class="countdown">Next update in: <span id="countdown"></span></p>
+        <h1>Days Until Possible Impact</h1>
+        <p style="color: gold; text-shadow: 0 0 10px gold, 0 0 20px gold;">of 2024 YR4 Asteroid.</p>
+        <div id="countdown">
+            <span id="years">00</span> Years
+            <span id="months">00</span> Months
+            <span id="days">00</span> Days
+            <span id="hours">00</span> Hours
+            <span id="minutes">00</span> Minutes
+            <span id="seconds">00</span> Seconds
+        </div>
     </div>
-    <div class="ads-container">Advertisement Space</div>
-    <div class="ads-container">Advertisement Space</div>
-    <div class="sources">
-        <p>Sources:</p>
-        <p>NASA Asteroid Monitoring Program</p>
-        <p>International Space Research Journal</p>
-        <p>AstroObservatory Database</p>
-    </div>
+
     <script>
-        function generateAsteroidData() {
-            const data = {
-                distance: (Math.random() * 50 + 0.1).toFixed(2) + " million km",
-                speed: (Math.random() * 40 + 10).toFixed(2) + " km/s",
-                impactOdds: (Math.random() * 2 + 0.0001).toFixed(4) + "%",
-                impactLocation: ["Pacific Ocean", "Atlantic Ocean", "South America", "Africa", "Indian Ocean", "Asia", "Arctic"] [Math.floor(Math.random() * 7)]
-            };
-            localStorage.setItem("asteroidData", JSON.stringify(data));
-            displayAsteroidData(data);
-        }
-        function displayAsteroidData(data) {
-            document.getElementById("distance").innerText = data.distance || "0.00 million km";
-            document.getElementById("speed").innerText = data.speed || "0.00 km/s";
-            document.getElementById("impactOdds").innerText = data.impactOdds || "0.0001%";
-            document.getElementById("impactLocation").innerText = data.impactLocation || "Unknown";
-        }
         function updateCountdown() {
-            let nextUpdate = parseInt(localStorage.getItem("nextUpdate")) || Date.now() + 21600000;
-            localStorage.setItem("nextUpdate", nextUpdate);
-            function tick() {
-                let timeDiff = nextUpdate - Date.now();
-                if (timeDiff <= 0) {
-                    generateAsteroidData();
-                    nextUpdate = Date.now() + 21600000;
-                    localStorage.setItem("nextUpdate", nextUpdate);
-                }
-                let hours = Math.floor(timeDiff / 3600000);
-                let minutes = Math.floor((timeDiff % 3600000) / 60000);
-                let seconds = Math.floor((timeDiff % 60000) / 1000);
-                document.getElementById("countdown").innerText = `${hours}h ${minutes}m ${seconds}s`;
+            const targetDate = new Date('December 22, 2025 00:00:00').getTime();
+            const now = new Date().getTime();
+            const timeLeft = targetDate - now;
+
+            if (timeLeft < 0) {
+                document.getElementById("countdown").innerHTML = "The impact event has occurred!";
+                return;
             }
-            setInterval(tick, 1000);
-            tick();
-            let storedData = JSON.parse(localStorage.getItem("asteroidData"));
-            if (storedData) displayAsteroidData(storedData);
+
+            let seconds = Math.floor(timeLeft / 1000);
+            let minutes = Math.floor(seconds / 60);
+            let hours = Math.floor(minutes / 60);
+            let days = Math.floor(hours / 24);
+            let months = Math.floor(days / 30);
+            let years = Math.floor(months / 12);
+
+            months %= 12;
+            days %= 30;
+            hours %= 24;
+            minutes %= 60;
+            seconds %= 60;
+
+            document.getElementById("years").innerText = years.toString().padStart(2, '0');
+            document.getElementById("months").innerText = months.toString().padStart(2, '0');
+            document.getElementById("days").innerText = days.toString().padStart(2, '0');
+            document.getElementById("hours").innerText = hours.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = minutes.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = seconds.toString().padStart(2, '0');
         }
+
+        setInterval(updateCountdown, 1000);
         updateCountdown();
     </script>
 </body>
