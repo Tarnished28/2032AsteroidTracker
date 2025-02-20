@@ -35,6 +35,7 @@
             font-size: 1.5em;
             margin: 10px 0;
             text-shadow: 0 0 5px cyan;
+            word-wrap: break-word;
         }
         .update-info {
             margin-top: 20px;
@@ -94,6 +95,7 @@
         }
         @media (max-width: 768px) {
             .ads-side { display: none; }
+            .data span { display: block; word-break: break-word; }
         }
     </style>
 </head>
@@ -104,10 +106,10 @@
     <div class="ads-side ads-right">Advertisement</div>
     <div class="container">
         <h1>Asteroid Y4R Tracker</h1>
-        <p class="data">Distance: <span id="distance"></span></p>
-        <p class="data">Speed: <span id="speed"></span></p>
-        <p class="data">Impact Odds: <span id="impactOdds"></span></p>
-        <p class="data">Potential Impact Location: <span id="impactLocation"></span></p>
+        <p class="data">Distance: <span id="distance">Loading...</span></p>
+        <p class="data">Speed: <span id="speed">Loading...</span></p>
+        <p class="data">Impact Odds: <span id="impactOdds">Loading...</span></p>
+        <p class="data">Potential Impact Location: <span id="impactLocation">Loading...</span></p>
         <p class="update-info">This data updates every 6 hours.</p>
         <p class="countdown">Next update in: <span id="countdown"></span></p>
     </div>
