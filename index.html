@@ -106,10 +106,10 @@
     <div class="ads-side ads-right">Advertisement</div>
     <div class="container">
         <h1>Asteroid Y4R Tracker</h1>
-        <p class="data">Distance: <span id="distance">Loading...</span></p>
-        <p class="data">Speed: <span id="speed">Loading...</span></p>
-        <p class="data">Impact Odds: <span id="impactOdds">Loading...</span></p>
-        <p class="data">Potential Impact Location: <span id="impactLocation">Loading...</span></p>
+        <p class="data">Distance: <span id="distance"></span></p>
+        <p class="data">Speed: <span id="speed"></span></p>
+        <p class="data">Impact Odds: <span id="impactOdds"></span></p>
+        <p class="data">Potential Impact Location: <span id="impactLocation"></span></p>
         <p class="update-info">This data updates every 6 hours.</p>
         <p class="countdown">Next update in: <span id="countdown"></span></p>
     </div>
@@ -133,10 +133,10 @@
             displayAsteroidData(data);
         }
         function displayAsteroidData(data) {
-            document.getElementById("distance").innerText = data.distance;
-            document.getElementById("speed").innerText = data.speed;
-            document.getElementById("impactOdds").innerText = data.impactOdds;
-            document.getElementById("impactLocation").innerText = data.impactLocation;
+            document.getElementById("distance").innerText = data.distance || "0.00 million km";
+            document.getElementById("speed").innerText = data.speed || "0.00 km/s";
+            document.getElementById("impactOdds").innerText = data.impactOdds || "0.0001%";
+            document.getElementById("impactLocation").innerText = data.impactLocation || "Unknown";
         }
         function updateCountdown() {
             let nextUpdate = parseInt(localStorage.getItem("nextUpdate")) || Date.now() + 21600000;
